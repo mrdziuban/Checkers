@@ -1,6 +1,6 @@
 # encoding: UTF-8
-require 'colored'
-require_relative 'piece.rb'
+require 'colorize'
+require_relative 'piece'
 
 class Board
   attr_accessor :board
@@ -39,19 +39,40 @@ class Board
       print "#{i} "
       row.each_with_index do |char, j|
         if (i + j).even?
-            print "   ".white_on_red
+            print "   ".colorize(:background => :red)
         elsif (i + j).odd?
           if char.is_a? String
-            print "   ".white_on_black
+            print "   ".colorize(:color => :white, :background => :black)
           elsif char.color == 'black'
-            print " #{char.representation} ".red_on_black
+            print " #{char.representation} ".colorize(:color => :red, :background => :black)
           else
-            print " #{char.representation} ".white_on_black
+            print " #{char.representation} ".colorize(:color => :white, :background => :black)
           end
         end
       end
       puts
     end
+    nil
   end
-  nil
+
+  def pieces_left?
+    white_pieces = []
+    black_pieces = []
+    @board.each do |row|
+      row.each do |char|
+        white_pieces << char if char.is_a?(Piece) && char.color == 'white'
+        black_pieces << char if char.is_a?(Piece) && char.color == 'black'
+      end
+    end
+    return false if white_pieces.empty? || black_pieces.empty?
+    true
+  end
+
+  def duplicate_board
+    board_dup = []
+    self.board.each do |row|
+      board_dup << row.dup
+    end
+    board_dup
+  end
 end
