@@ -14,11 +14,13 @@ class HumanPlayer
       move_sequence = get_move_sequence
       piece = board.board[move_sequence[0][0]][move_sequence[0][1]]
       if piece == "_"
-        raise InvalidMoveError.new
+        raise InvalidMoveError.new "That's not a piece."
+      elsif piece.color != self.color
+        raise InvalidMoveError.new "You can't move the other player's piece."
       end
       piece.perform_moves(move_sequence, board) # board is Board object
-    rescue InvalidMoveError
-      puts "Invalid move."
+    rescue InvalidMoveError => e
+      puts e.message
       retry
     end
   end
