@@ -1,6 +1,6 @@
 # encoding: UTF-8
 require 'colored'
-require './piece.rb'
+require_relative 'piece.rb'
 
 class Board
   attr_accessor :board
