@@ -8,7 +8,7 @@ class Board
   def initialize
     @board = []
     8.times do
-      @board << ["_"] * 8
+      @board << [nil] * 8
     end
 
     place_pieces
@@ -41,7 +41,7 @@ class Board
         if (i + j).even?
             print "   ".colorize(:background => :red)
         elsif (i + j).odd?
-          if char.is_a? String
+          if char.nil?
             print "   ".colorize(:color => :white, :background => :black)
           elsif char.color == 'black'
             print " #{char.representation} ".colorize(:color => :red, :background => :black)
@@ -58,13 +58,11 @@ class Board
   def pieces_left?
     white_pieces = []
     black_pieces = []
-    @board.each do |row|
-      row.each do |char|
-        white_pieces << char if char.is_a?(Piece) && char.color == 'white'
-        black_pieces << char if char.is_a?(Piece) && char.color == 'black'
-      end
+    @board.flatten.each do |char|
+      white_pieces << char if char.is_a?(Piece) && char.color == 'white'
+      black_pieces << char if char.is_a?(Piece) && char.color == 'black'
     end
-    return false if white_pieces.empty? || black_pieces.empty?
+    return false if white_pieces.compact.empty? || black_pieces.compact.empty?
     true
   end
 

@@ -21,13 +21,14 @@ class Checkers
     play_game
   end
 
-  def current_turn
-
-  end
-
   def play_game
     while @board.pieces_left?
       @board.render
+      if @players[@current_player].color == 'black'
+        puts "red player's turn"
+      else
+        puts "#{@players[@current_player].color} player's turn"
+      end
       @players[@current_player].make_move(@board)
       @current_player = @current_player == 'black' ? 'white' : 'black'
     end
