@@ -26,7 +26,7 @@ class HumanPlayer
   end
 
   def get_move_sequence
-    print "Enter your move sequence: "
+    print "Enter your move sequence (format 0,0 1,1): "
     str = gets.chomp.split.map {|i| [i]}
     sequence = []
 
