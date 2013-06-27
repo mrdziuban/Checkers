@@ -9,14 +9,14 @@ class Checkers
     @board = Board.new
 
     @players = {
-      'black' => HumanPlayer.new('black'),
-      'white' => HumanPlayer.new('white')
+      :black => HumanPlayer.new('black'),
+      :white => HumanPlayer.new('white')
     }
 
     puts "Player 1 is red"
     puts "Player 2 is white"
 
-    @current_player = 'black'
+    @current_player = :black
 
     play_game
   end
@@ -30,7 +30,7 @@ class Checkers
         puts "#{@players[@current_player].color} player's turn"
       end
       @players[@current_player].make_move(@board)
-      @current_player = @current_player == 'black' ? 'white' : 'black'
+      @current_player = @current_player == :black ? :white : :black
     end
   end
 end
