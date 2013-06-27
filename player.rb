@@ -25,6 +25,8 @@ class HumanPlayer
     end
   end
 
+  # REV: you might want to use a regex to sanitize the input here.
+  #      Check out www.rubular.com
   def get_move_sequence
     print "Enter your move sequence (format 0,0 1,1): "
     str = gets.chomp.split.map {|i| [i]}

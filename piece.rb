@@ -5,6 +5,8 @@ class InvalidMoveError < StandardError
 end
 
 class Piece
+  # REV: instead of using ':representation' for the icon, you could
+  #      override the to_s method instead
   attr_accessor :color, :location, :representation
 
   def initialize(color, location)
@@ -41,6 +43,7 @@ class Piece
     if valid_move_seq?(move_sequence, board)
       perform_moves!(move_sequence, board.board)
     else
+      # REV: you can leave out the ".new" here
       raise InvalidMoveError.new
     end
   end
@@ -56,6 +59,8 @@ class Piece
     true
   end
 
+  # REV: slide_moves and jump_moves are really long - can they be broken
+  #      up into submethods?
   def slide_moves(start_point, end_point, board) # board should be array
     delta_y = end_point[0] - start_point[0]
     delta_x = end_point[1] - start_point[1]

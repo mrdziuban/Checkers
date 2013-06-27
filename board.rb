@@ -6,6 +6,8 @@ class Board
   attr_accessor :board
 
   def initialize
+    # REV: you can do the following 4 lines in 1 line by just running:
+    # @board = Array.new(8) {Array.new(8)}
     @board = []
     8.times do
       @board << [nil] * 8
@@ -15,6 +17,8 @@ class Board
   end
 
   def place_pieces
+    # REV: the first and second halves of this method are repetitive.
+    #      They be condensed into one block of code.
     (0..2).each do |row|
       (0..7).each do |col|
         if (row + col).odd?
@@ -31,6 +35,11 @@ class Board
     end
   end
 
+  # REV: it might be better to instead make this a to_s method that instead
+  #      constructs a string for the whole board (using '\n' characters)
+  #      and returns the whole string. That way, you can run 'p board'
+  #      from the debugger and any point to easily get the board, and you
+  #      can save the board string to view at a later point, if needed.
   def render
     print "  "
     (0..7).each {|x| print " #{x} "}
