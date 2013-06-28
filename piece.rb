@@ -1,5 +1,4 @@
 # encoding: UTF-8
-require 'debugger'
 
 class InvalidMoveError < StandardError
 end
@@ -41,7 +40,7 @@ class Piece
     if valid_move_seq?(move_sequence, board)
       perform_moves!(move_sequence, board.board)
     else
-      raise InvalidMoveError.new
+      raise InvalidMoveError
     end
   end
 
@@ -162,7 +161,6 @@ class Piece
   end
 
   def is_king?
-    return true if self.representation == "⛃" || self.representation == "⛁"
-    false
+    (self.representation == "⛃" || self.representation) == "⛁" ? true : false
   end
 end

@@ -22,8 +22,8 @@ class Checkers
   end
 
   def play_game
-    while @board.pieces_left?
-      @board.render
+    until board.game_over?
+      puts board
       if @players[@current_player].color == 'black'
         puts "red player's turn"
       else

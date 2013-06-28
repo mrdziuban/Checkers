@@ -6,64 +6,62 @@ class Board
   attr_accessor :board
 
   def initialize
-    @board = []
-    8.times do
-      @board << [nil] * 8
-    end
+    @board = Array.new(8) {Array.new(8)}
 
     place_pieces
   end
 
   def place_pieces
-    (0..2).each do |row|
-      (0..7).each do |col|
-        if (row + col).odd?
-          @board[row][col] = Piece.new('black', [row,col])
-        end
-      end
-    end
-    (5..7).each do |row|
-      (0..7).each do |col|
-        if (row + col).odd?
-          @board[row][col] = Piece.new('white', [row,col])
+    piece_rows = [(0..2), (5..7)]
+    piece_rows.each do |range|
+      range.each do |row|
+        color = row < 3 ? 'black' : 'white'
+        (0..7).each do |col|
+          if (row + col).odd?
+            @board[row][col] = Piece.new(color, [row,col])
+          end
         end
       end
     end
   end
 
   def render
-    print "  "
-    (0..7).each {|x| print " #{x} "}
-    puts
+    to_s
+  end
+
+  def to_s
+    board_string = "  "
+    (0..7).each {|x| board_string += " #{x} "}
+    board_string += "\n"
     @board.each_with_index do |row, i|
-      print "#{i} "
+      board_string += "#{i} "
       row.each_with_index do |char, j|
         if (i + j).even?
-            print "   ".colorize(:background => :red)
+            board_string += "   ".colorize(:background => :red)
         elsif (i + j).odd?
           if char.nil?
-            print "   ".colorize(:color => :white, :background => :black)
+            board_string += "   ".colorize(:color => :white, :background => :black)
           elsif char.color == 'black'
-            print " #{char.representation} ".colorize(:color => :red, :background => :black)
+            board_string += " #{char.representation} ".colorize(:color => :red, :background => :black)
           else
-            print " #{char.representation} ".colorize(:color => :white, :background => :black)
+            board_string += " #{char.representation} ".colorize(:color => :white, :background => :black)
           end
         end
       end
-      puts
+      board_string += "\n"
     end
-    nil
+    board_string
   end
 
-  def pieces_left?
+  def game_over?
     white_pieces = []
     black_pieces = []
     @board.flatten.each do |char|
       white_pieces << char if char.is_a?(Piece) && char.color == 'white'
       black_pieces << char if char.is_a?(Piece) && char.color == 'black'
     end
-    return false if white_pieces.compact.empty? || black_pieces.compact.empty?
-    true
+    return true if white_pieces.compact.empty? || black_pieces.compact.empty?
+    false
   end
 
   def duplicate_board

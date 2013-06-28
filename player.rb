@@ -40,6 +40,3 @@ class HumanPlayer
     sequence
   end
 end
-
-
-
