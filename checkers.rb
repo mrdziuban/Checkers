@@ -34,3 +34,7 @@ class Checkers
     end
   end
 end
+
+if __FILE__ == $PROGRAM_NAME
+  Checkers.new
+end
